@@ -4,6 +4,7 @@ import com.math.cleanarchex.infra.driven.blockchainProvider.dto.block.BlockDetai
 import com.math.cleanarchex.infra.driven.blockchainProvider.dto.event.ContractEventDetails;
 import com.math.cleanarchex.infra.driven.blockchainProvider.dto.transaction.TransactionDetails;
 import com.math.cleanarchex.infra.driven.blockchainProvider.integration.broadcast.BroadcastException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.support.RetryTemplate;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
  * The url to post to for block and contract events can be configured via the
  * broadcast.http.contractEvents and broadcast.http.blockEvents properties.
  */
+@Slf4j
 public class HttpBlockchainEventBroadcaster implements BlockchainEventBroadcaster {
 
     private final HttpBroadcasterSettings settings;
@@ -32,13 +34,15 @@ public class HttpBlockchainEventBroadcaster implements BlockchainEventBroadcaste
 
     @Override
     public void broadcastNewBlock(BlockDetails block) {
-        retryTemplate.execute((context) -> {
-            final ResponseEntity<Void> response =
-                    restTemplate.postForEntity(settings.getBlockEventsUrl(), block, Void.class);
+//        retryTemplate.execute((context) -> {
+//            final ResponseEntity<Void> response =
+//                    restTemplate.postForEntity(settings.getBlockEventsUrl(), block, Void.class);
+//
+//            checkForSuccessResponse(response);
+//            return null;
+//        });
 
-            checkForSuccessResponse(response);
-            return null;
-        });
+        log.info("Broadcasting new block: {} ", block);
     }
 
     @Override

@@ -79,6 +79,25 @@ kafka:
     protocol: ${KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
   retries: ${KAFKA_RETRIES:10}
 
+#eventFilters:
+#  - id: RequestCreated
+#    node: default
+#    contractAddress: ${CONTRACT_ADDRESS:0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0}
+#    eventSpecification:
+#      eventName: Transfer
+#      indexedParameterDefinitions:
+#        - position: 0
+#          type: ADDRESS
+#        - position: 1
+#          type: ADDRESS
+#      nonIndexedParameterDefinitions:
+#        - position: 2
+#          type: UINT256
+#    correlationId:
+#      type: NON_INDEXED_PARAMETER
+#      index: 0
+#    startBlock: 0
+
 logging:
   group:
     web: org.springframework.core.codec, org.springframework.http, org.springframework.web

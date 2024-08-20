@@ -18,7 +18,7 @@ public class EventProcessingBlockListener implements BlockListener {
     @Lazy
     private SubscriptionService subscriptionService;
 
-    private ContractEventProcessor contractEventProcessor;
+    private final ContractEventProcessor contractEventProcessor;
 
     @Autowired
     public EventProcessingBlockListener(@Lazy SubscriptionService subscriptionService,

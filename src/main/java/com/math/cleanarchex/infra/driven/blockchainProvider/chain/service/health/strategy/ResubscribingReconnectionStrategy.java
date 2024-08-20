@@ -14,7 +14,6 @@ public abstract class ResubscribingReconnectionStrategy implements ReconnectionS
 
     @Override
     public void resubscribe() {
-
         blockSubscriptionStrategy.subscribe();
     }
 }

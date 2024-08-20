@@ -63,7 +63,7 @@ public class KafkaEventeumEventBroadcaster implements EventeumEventBroadcaster {
         sendMessage(createTransactionMonitorRemovedMessage(spec));
     }
 
-    protected EventeumMessage createContractEventFilterAddedMessage(ContractEventFilter filter) {
+    public EventeumMessage createContractEventFilterAddedMessage(ContractEventFilter filter) {
         return new ContractEventFilterAdded(filter);
     }
 

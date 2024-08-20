@@ -7,6 +7,7 @@ import com.math.cleanarchex.infra.driven.blockchainProvider.chain.service.domain
 import com.math.cleanarchex.infra.driven.blockchainProvider.service.AsyncTaskService;
 import com.math.cleanarchex.infra.driven.blockchainProvider.utils.ExecutorNameFactory;
 import io.reactivex.disposables.Disposable;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
@@ -23,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public abstract class AbstractBlockSubscriptionStrategy<T> implements BlockSubscriptionStrategy {
 
     protected static final String BLOCK_EXECUTOR_NAME = "BLOCK";
-    private final AtomicBoolean errored = new AtomicBoolean(false);
+
     protected Collection<BlockListener> blockListeners = new ConcurrentLinkedQueue<>();
     protected Disposable blockSubscription;
     protected Web3j web3j;
@@ -31,6 +32,8 @@ public abstract class AbstractBlockSubscriptionStrategy<T> implements BlockSubsc
     protected AsyncTaskService asyncService;
     protected BlockNumberService blockNumberService;
     protected AtomicLong lastBlockNumberProcessed = new AtomicLong(0);
+
+    private AtomicBoolean errored = new AtomicBoolean(false);
 
     public AbstractBlockSubscriptionStrategy(Web3j web3j,
                                              String nodeName,
@@ -47,6 +50,7 @@ public abstract class AbstractBlockSubscriptionStrategy<T> implements BlockSubsc
         return nodeName;
     }
 
+    @PreDestroy
     @Override
     public void unsubscribe() {
         try {

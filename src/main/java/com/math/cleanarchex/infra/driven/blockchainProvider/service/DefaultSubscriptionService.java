@@ -167,10 +167,8 @@ public class DefaultSubscriptionService implements SubscriptionService {
         }
     }
 
-    private void subscribeToNewBlockEvents(
-            BlockSubscriptionStrategy subscriptionStrategy, List<BlockListener> blockListeners) {
+    private void subscribeToNewBlockEvents(BlockSubscriptionStrategy subscriptionStrategy, List<BlockListener> blockListeners) {
         blockListeners.forEach(subscriptionStrategy::addBlockListener);
-
         subscriptionStrategy.subscribe();
     }
 
