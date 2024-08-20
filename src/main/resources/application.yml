@@ -1,0 +1,112 @@
+spring:
+  main:
+    banner-mode: "console"
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  application:
+    name: "spring-boot-2"
+  data:
+    mongodb:
+      uri: mongodb+srv://mathhm2:mCd19sjuMi9jRO1o@fingrow.g0po327.mongodb.net/?retryWrites=true&w=majority&appName=fingrow
+      database: fingrow
+
+ethereum:
+  nodes:
+    - name: default
+      url: http://127.0.0.1:8545/
+      pollInterval: 1000
+      maxIdleConnections: 10
+      keepAliveDuration: 15000
+      connectionTimeout: 7000
+      readTimeout: 35000
+      healthcheckInterval: 3000
+      addTransactionRevertReason: true
+      numBlocksToWait: 1
+      numBlocksToWaitBeforeInvalidating: 1
+      numBlocksToWaitForMissingTx: 1
+      blockStrategy: POLL
+      syncingThreshold: 100
+      maxBlocksToSync: 0
+  healthcheck:
+    pollInterval: 5000
+  sync:
+    batchSize: 100000
+
+eventStore:
+  type: DB
+  url: http://localhost:8081/api/rest/v1
+  eventPath: /event
+database:
+  type: MONGO
+
+broadcaster:
+  type: HTTP
+  cache:
+    expirationMillis: 6000000
+  event:
+    confirmation:
+      numBlocksToWait: 12
+      numBlocksToWaitForMissingTx: 100
+      numBlocksToWaitBeforeInvalidating: 2
+  multiInstance: false
+  enableBlockNotifications: true
+
+# For Kafka
+zookeeper:
+  address: ${ZOOKEEPER_ADDRESS:localhost:2181}
+kafka:
+  bootstrap:
+    addresses: ${KAFKA_ADDRESSES:localhost:9092}
+  topic:
+    contractEvents: contract-events
+    blockEvents: block-events
+    eventeumEvents: eventeum-events
+    transactionEvents: transaction-events
+  request:
+    timeout:
+      msConfig: ${KAFKA_REQUEST_TIMEOUT_MS:20000}
+  retry:
+    backoff:
+      msConfig: ${KAFKA_RETRY_BACKOFF_MS:500}
+  endpoint:
+    identification:
+      algorithm: ${KAFKA_ENDPOINT_IDENTIFICATION_ALGORITHM:null}
+  sasl:
+    mechanism: ${KAFKA_SASL_MECHANISM:PLAIN}
+    username: ${KAFKA_USERNAME:""}
+    password: ${KAFKA_PASSWORD:""}
+  security:
+    protocol: ${KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
+  retries: ${KAFKA_RETRIES:10}
+
+logging:
+  group:
+    web: org.springframework.core.codec, org.springframework.http, org.springframework.web
+    spring: org.springframework.core.env
+    servlet: org.springframework.boot.web, org.apache.catalina, org.apache.coyote, org.apache.tomcat
+    app: com.example.demo
+    mongo: org.springframework.data.mongodb, org.mongodb
+  level:
+    root: info
+    web: info
+    spring: info
+    servlet: info
+    app: info
+    mongo: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %c: %M - %m%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %c: %M - %m%n"
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+    mongo:
+      enabled: true
